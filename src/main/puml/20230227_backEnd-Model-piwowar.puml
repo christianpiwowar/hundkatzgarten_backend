@@ -1,0 +1,45 @@
+@startuml
+
+class Kunde {
+  +id: int
+  +vorname: string
+  +nachname: string
+  +strasse: string
+  +ort: string
+  +plz: string
+  +land: string
+  +kundennummer: string
+  +telefonnummer: string
+  +email: string
+}
+
+class Dienstleistung {
+  +id: int
+  +beschreibung: string
+  +preis: double
+}
+
+class Auftrag {
+  +id: int
+  -kundenId: int
+  -dateCreated: Date
+  -bezahlt: boolean = false
+  -auftragsPositionen: List<Auftragsposition>
+  -auftragSumme: double
+  +setAuftragSumme(): void
+}
+
+class Auftragsposition {
+  +id: int
+  -dienstleistungId: int
+  -currentDienstleistungPreis: double
+  -menge: int = 1
+  -totalAuftragsPosition: double
+  +setTotalAuftragsPosition(): void
+}
+
+Kunde "1" -right--- "many" Auftrag
+Auftrag "1" --* "many" Auftragsposition
+Auftragsposition "1" -left-* "1" Dienstleistung
+
+@enduml
